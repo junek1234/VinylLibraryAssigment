@@ -10,6 +10,7 @@ public class ReservedState implements VinylState
       vinyl.setReservedBy(0);
       vinyl.setBorrowedBy(clientID);
       vinyl.changeToBorrowedState();
+
     }
   }
 
@@ -23,8 +24,24 @@ public class ReservedState implements VinylState
     //nothing
   }
 
-  @Override public String getStateName(Vinyl vinyl)
+  @Override public void onCancel(Vinyl vinyl, int clientID)
   {
-    return "Reserved by "+vinyl.getReservedBy();
+    if(clientID== vinyl.getReservedBy())
+    {
+      vinyl.setReservedBy(0);
+      vinyl.changeToAvailableState();
+
+    }
   }
+
+  @Override public void updateStatus(Vinyl vinyl)
+  {
+    String status="Reserved by "+vinyl.getReservedBy();
+    if(vinyl.isRemoveFlag())
+    {
+      status+=" (to be REMOVED)";
+    }
+    vinyl.setStatus(status);
+  }
+
 }

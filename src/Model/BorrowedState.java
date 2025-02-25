@@ -23,8 +23,19 @@ public class BorrowedState implements VinylState
 
   }
 
-  @Override public String getStateName(Vinyl vinyl)
+  @Override public void onCancel(Vinyl vinyl, int clientID)
   {
-    return "Borrowed by "+vinyl.getBorrowedBy();
+    //nothing
   }
+
+  @Override public void updateStatus(Vinyl vinyl)
+  {
+    String status="Borrowed by "+vinyl.getBorrowedBy();
+    if(vinyl.isRemoveFlag())
+    {
+      status+=" (to be REMOVED)";
+    }
+    vinyl.setStatus(status);
+  }
+
 }

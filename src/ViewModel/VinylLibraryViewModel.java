@@ -20,7 +20,7 @@ public class VinylLibraryViewModel
   {
     this.vinylLibrary = vinylLibrary;
     vinyls= FXCollections.observableArrayList();
-    vinylLibrary.addPropertyChangeListener(this::update);
+    vinylLibrary.addPropertyChangeListener("Vinyls",this::update);
     userID = new SimpleIntegerProperty();
   }
 
@@ -40,5 +40,37 @@ public class VinylLibraryViewModel
   public IntegerProperty getUserIDProperty()
   {
     return userID;
+  }
+
+  public void onBorrow(Vinyl vinyl)
+  {
+    vinylLibrary.borrowVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+  }
+  public void onReserve(Vinyl vinyl)
+  {
+    vinylLibrary.reserveVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+  }
+  public void onReturn(Vinyl vinyl)
+  {
+    vinylLibrary.returnVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+  }
+  public void onCancel(Vinyl vinyl)
+  {
+    vinylLibrary.cancelReservation(getUserIDProperty().getValue(),findIndex(vinyl));
+  }
+  public void onRemove(Vinyl vinyl)
+  {
+    vinylLibrary.removeVinyl(findIndex(vinyl));
+  }
+  public int findIndex(Vinyl vinyl)
+  {
+    for (int i = 0; i < vinylLibrary.getVinyls().size(); i++)
+    {
+      if(vinylLibrary.getVinyls().get(i)==vinyl)
+      {
+        return i;
+      }
+    }
+    return -1;
   }
 }

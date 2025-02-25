@@ -21,30 +21,51 @@ public class VinylLibrary implements PropertyChangeSubject
   }
   public void removeVinyl(int vinylID)
   {
-    //add logic that vinyls can be removed only when state = available
-    //otherwise they are marked as to be removed and wait until they are returned
-    //as marked they cannot be reserved
-    vinyls.remove(vinylID);
-    support.firePropertyChange("Vinyls",null, vinyls);
+    Thread thread = new Thread(()->{
+      vinyls.get(vinylID).setRemoveFlag();
+      firePropertyChange();
+      while(!vinyls.get(vinylID).currentState.getClass().getSimpleName().equals("AvailableState"))
+      {
+        try
+        {
+          Thread.sleep(100);
+        }
+        catch (InterruptedException e)
+        {
+          throw new RuntimeException(e);
+        }
+      }
+      vinyls.remove(vinylID);
+      firePropertyChange();
+    });
+    thread.setDaemon(true);
+    thread.start();
+
   }
   public void borrowVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onBorrow(clientID);
-    support.firePropertyChange("Vinyls",null, vinyls);
+    firePropertyChange();
   }
   public void reserveVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onReserve(clientID);
-    support.firePropertyChange("Vinyls",null, vinyls);
+    firePropertyChange();
   }
   public void returnVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onReturn(clientID);
-    support.firePropertyChange("Vinyls",null, vinyls);
+    firePropertyChange();
   }
-  public String getVinylData(int vinylID)
+  public void cancelReservation(int clientID, int vinylID)
   {
-    return vinyls.get(vinylID).getStateName();
+    vinyls.get(vinylID).onCancel(clientID);
+    firePropertyChange();
+  }
+
+  public List<Vinyl> getVinyls()
+  {
+    return vinyls;
   }
 
   @Override public void addPropertyChangeListener(
@@ -69,5 +90,9 @@ public class VinylLibrary implements PropertyChangeSubject
       PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(name, listener);
+  }
+  public void firePropertyChange()
+  {
+    support.firePropertyChange("Vinyls",null, vinyls);
   }
 }

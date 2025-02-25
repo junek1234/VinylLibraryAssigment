@@ -5,6 +5,7 @@ import Model.VinylLibrary;
 import View.VinylLibraryView;
 import ViewModel.VinylLibraryViewModel;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -28,7 +29,11 @@ public class Main extends Application
     vinylLibrary.addVinyl(vinyl1);
     vinylLibrary.addVinyl(vinyl2);
     vinylLibrary.addVinyl(vinyl3);
+
+
+
     vinylLibrary.borrowVinyl(1,0);
+    vinylLibrary.reserveVinyl(1,0);
     vinylLibrary.reserveVinyl(2,1);
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/VinylLibraryView.fxml"));

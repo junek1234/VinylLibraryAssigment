@@ -15,31 +15,31 @@ public class ModelTest1
     vinylLibrary.addVinyl(vinyl2);
     vinylLibrary.addVinyl(vinyl3);
 
-    System.out.println(vinylLibrary.getVinylData(0));
-    System.out.println(vinylLibrary.getVinylData(1));
-    System.out.println(vinylLibrary.getVinylData(2));
+    System.out.println(vinylLibrary.getVinyls().get(0).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(1).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(2).getStatus());
 
     vinylLibrary.borrowVinyl(client1,0);
     vinylLibrary.reserveVinyl(client2,1);
 
-    System.out.println(vinylLibrary.getVinylData(0));
-    System.out.println(vinylLibrary.getVinylData(1));
-    System.out.println(vinylLibrary.getVinylData(2));
+    System.out.println(vinylLibrary.getVinyls().get(0).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(1).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(2).getStatus());
 
     vinylLibrary.borrowVinyl(client3, 0);
     vinylLibrary.borrowVinyl(client2, 1);
     vinylLibrary.reserveVinyl(client3, 1);
 
-    System.out.println(vinylLibrary.getVinylData(0));
-    System.out.println(vinylLibrary.getVinylData(1));
-    System.out.println(vinylLibrary.getVinylData(2));
+    System.out.println(vinylLibrary.getVinyls().get(0).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(1).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(2).getStatus());
 
     vinylLibrary.returnVinyl(client2,1);
     vinylLibrary.returnVinyl(client1,0);
 
-    System.out.println(vinylLibrary.getVinylData(0));
-    System.out.println(vinylLibrary.getVinylData(1));
-    System.out.println(vinylLibrary.getVinylData(2));
+    System.out.println(vinylLibrary.getVinyls().get(0).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(1).getStatus());
+    System.out.println(vinylLibrary.getVinyls().get(2).getStatus());
 
   }
 }

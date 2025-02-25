@@ -20,8 +20,20 @@ public class AvailableState implements VinylState
     //nothing
   }
 
-  @Override public String getStateName(Vinyl vinyl)
+  @Override public void onCancel(Vinyl vinyl, int clientID)
   {
-    return "Available";
+    //nothing
   }
+
+  @Override public void updateStatus(Vinyl vinyl)
+  {
+    String status="Available";
+    if(vinyl.isRemoveFlag())
+    {
+      status+=" (to be REMOVED)";
+    }
+    vinyl.setStatus(status);
+  }
+
+
 }

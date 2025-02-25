@@ -6,8 +6,25 @@ public class Vinyl
   private String title;
   private String artist;
   private int releaseYear;
-  private int reservedBy;
-  private int borrowedBy;
+  private int reservedBy;//add this to Astah
+  private int borrowedBy;//asd
+  private String status;//asd
+  private boolean removeFlag;
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public String getArtist()
+  {
+    return artist;
+  }
+
+  public int getReleaseYear()
+  {
+    return releaseYear;
+  }
 
   public Vinyl(String title, String artist, int releaseYear)
   {
@@ -21,6 +38,14 @@ public class Vinyl
     this.releaseYear=releaseYear;
     this.reservedBy=0;
     this.borrowedBy=0;
+    status="Available";
+    removeFlag = false;
+  }
+
+  public String getStatus()
+  {
+    currentState.updateStatus(this);
+    return status;
   }
 
   public int getReservedBy()
@@ -49,11 +74,18 @@ public class Vinyl
   }
   public void onReserve(int clientID)
   {
-    currentState.onReserve(this, clientID);
+    if(!removeFlag)
+    {
+      currentState.onReserve(this, clientID);
+    }
   }
   public void onReturn(int clientID)
   {
     currentState.onReturn(this, clientID);
+  }
+  public void onCancel(int clientID)
+  {
+    currentState.onCancel(this,clientID);
   }
   public void changeToAvailableState()
   {
@@ -72,9 +104,18 @@ public class Vinyl
     currentState = borrowedReservedState;
   }
 
-  public String getStateName()
+
+  public void setStatus(String status)
   {
-    return currentState.getStateName(this);
+    this.status = status;
+  }
+  public void setRemoveFlag()
+  {
+    removeFlag=true;
+  }
+  public boolean isRemoveFlag()
+  {
+    return removeFlag;
   }
 
 }
