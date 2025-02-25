@@ -1,7 +1,9 @@
+package Model;
+
 public interface VinylState
 {
-  void onBorrow();
-  void onReserve();
-  void onReturn();
-  String getStateName();
+  void onBorrow(Vinyl vinyl, int clientID);
+  void onReserve(Vinyl vinyl, int clientID);
+  void onReturn(Vinyl vinyl, int clientID);
+  String getStateName(Vinyl vinyl);
 }
