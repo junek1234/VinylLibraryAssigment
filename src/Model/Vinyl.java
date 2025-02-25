@@ -72,4 +72,9 @@ public class Vinyl
     currentState = borrowedReservedState;
   }
 
+  public String getStateName()
+  {
+    return currentState.getStateName(this);
+  }
+
 }
