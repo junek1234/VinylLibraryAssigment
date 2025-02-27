@@ -15,12 +15,12 @@ public class VinylLibrary implements PropertyChangeSubject
     vinyls = new ArrayList<>();
     support = new PropertyChangeSupport(this);
   }
-  public void addVinyl(Vinyl vinyl)
+  public synchronized void addVinyl(Vinyl vinyl)
   {
     vinyls.add(vinyl);
     firePropertyChange();
   }
-  public void removeVinyl(int vinylID)
+  public synchronized void removeVinyl(int vinylID)
   {
     Thread thread = new Thread(()->{
       vinyls.get(vinylID).setRemoveFlag();
@@ -43,22 +43,22 @@ public class VinylLibrary implements PropertyChangeSubject
     thread.start();
 
   }
-  public void borrowVinyl(int clientID, int vinylID)
+  public synchronized void borrowVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onBorrow(clientID);
     firePropertyChange();
   }
-  public void reserveVinyl(int clientID, int vinylID)
+  public synchronized void reserveVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onReserve(clientID);
     firePropertyChange();
   }
-  public void returnVinyl(int clientID, int vinylID)
+  public synchronized void returnVinyl(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onReturn(clientID);
     firePropertyChange();
   }
-  public void cancelReservation(int clientID, int vinylID)
+  public synchronized void cancelReservation(int clientID, int vinylID)
   {
     vinyls.get(vinylID).onCancel(clientID);
     firePropertyChange();

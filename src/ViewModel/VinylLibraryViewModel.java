@@ -21,6 +21,8 @@ public class VinylLibraryViewModel
   private ObservableList<Vinyl> vinyls;
   private IntegerProperty userID;
 
+
+
   public VinylLibraryViewModel(VinylLibrary vinylLibrary)
   {
     this.vinylLibrary = vinylLibrary;
@@ -31,11 +33,13 @@ public class VinylLibraryViewModel
 
   private void update(PropertyChangeEvent event)
   {
+    //save current selection
     vinyls.clear();
-
     List<Vinyl> newVinyls =(List<Vinyl>) event.getNewValue();
     vinyls.addAll(newVinyls);
+    //restore selection
   }
+
 
   public ObservableList<Vinyl> getVinyls()
   {

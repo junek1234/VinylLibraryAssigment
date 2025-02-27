@@ -15,7 +15,6 @@ import javafx.util.converter.NumberStringConverter;
 
 public class VinylLibraryView
 {
-  @FXML Button addButton;
   private VinylLibraryViewModel listViewModel;
   private ObservableList<Vinyl> vinyls;
   @FXML TableView tableView;
@@ -25,6 +24,7 @@ public class VinylLibraryView
   @FXML Button returnButton;
   @FXML Button cancelButton;
   @FXML Button removeButton;
+  @FXML Button addButton;
   @FXML TableColumn<Vinyl, String> title;
   @FXML TableColumn<Vinyl, String> artist;
   @FXML TableColumn<Vinyl, Integer> releaseYear;
@@ -37,6 +37,10 @@ public class VinylLibraryView
   public void initialize()
   {
     textFieldID.textProperty().bindBidirectional(listViewModel.getUserIDProperty(), new NumberStringConverter());
+    borrowButton.disableProperty().bind(listViewModel.getUserIDProperty().isEqualTo(0));
+    reserveButton.disableProperty().bind(listViewModel.getUserIDProperty().isEqualTo(0));
+    returnButton.disableProperty().bind(listViewModel.getUserIDProperty().isEqualTo(0));
+    cancelButton.disableProperty().bind(listViewModel.getUserIDProperty().isEqualTo(0));
     vinyls=listViewModel.getVinyls();
     title.setCellValueFactory(new PropertyValueFactory<>("title"));
     artist.setCellValueFactory(new PropertyValueFactory<>("artist"));
