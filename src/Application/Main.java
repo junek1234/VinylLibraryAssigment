@@ -2,7 +2,9 @@ package Application;
 
 import Model.Vinyl;
 import Model.VinylLibrary;
+import View.AddVinylView;
 import View.VinylLibraryView;
+import ViewModel.AddVinylViewModel;
 import ViewModel.VinylLibraryViewModel;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,6 +24,7 @@ public class Main extends Application
   {
     VinylLibrary vinylLibrary = new VinylLibrary();
     VinylLibraryViewModel viewModel = new VinylLibraryViewModel(vinylLibrary);
+    AddVinylViewModel addViewModel = new AddVinylViewModel(vinylLibrary);
 
     Vinyl vinyl1 = new Vinyl("123","123",2010);
     Vinyl vinyl2 = new Vinyl("qwe","123",2011);
@@ -43,5 +46,7 @@ public class Main extends Application
     primaryStage.setTitle("Vinyl Library");
     primaryStage.setScene(sceneLibraryList);
     primaryStage.show();
+
+
   }
 }

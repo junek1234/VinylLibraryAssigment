@@ -18,6 +18,7 @@ public class VinylLibrary implements PropertyChangeSubject
   public void addVinyl(Vinyl vinyl)
   {
     vinyls.add(vinyl);
+    firePropertyChange();
   }
   public void removeVinyl(int vinylID)
   {

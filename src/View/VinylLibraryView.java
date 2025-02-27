@@ -1,16 +1,21 @@
 package View;
 
 import Model.Vinyl;
+import ViewModel.AddVinylViewModel;
 import ViewModel.VinylLibraryViewModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
 public class VinylLibraryView
 {
+  @FXML Button addButton;
   private VinylLibraryViewModel listViewModel;
   private ObservableList<Vinyl> vinyls;
   @FXML TableView tableView;
@@ -28,7 +33,6 @@ public class VinylLibraryView
   public VinylLibraryView(VinylLibraryViewModel listViewModel)
   {
     this.listViewModel=listViewModel;
-
   }
   public void initialize()
   {
@@ -68,5 +72,10 @@ public class VinylLibraryView
   {
     Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
     listViewModel.onRemove(selectedItem);
+  }
+
+  public void onAddButtonPressed()
+  {
+    listViewModel.onAdd();
   }
 }

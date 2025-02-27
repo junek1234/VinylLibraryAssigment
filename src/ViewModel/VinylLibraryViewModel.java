@@ -2,12 +2,17 @@ package ViewModel;
 
 import Model.Vinyl;
 import Model.VinylLibrary;
+import View.AddVinylView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.util.List;
 
 public class VinylLibraryViewModel
@@ -61,6 +66,27 @@ public class VinylLibraryViewModel
   public void onRemove(Vinyl vinyl)
   {
     vinylLibrary.removeVinyl(findIndex(vinyl));
+  }
+
+  public void onAdd()
+  {
+    AddVinylViewModel addViewModel = new AddVinylViewModel(vinylLibrary);
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/AddVinylView.fxml"));
+    fxmlLoader.setControllerFactory(controllerClass -> new AddVinylView(addViewModel));
+
+    Scene sceneAddVinyl = null;
+    try
+    {
+      sceneAddVinyl = new Scene(fxmlLoader.load());
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+    Stage addStage = new Stage();
+    addStage.setTitle("Add Vinyl");
+    addStage.setScene(sceneAddVinyl);
+    addStage.show();
   }
   public int findIndex(Vinyl vinyl)
   {

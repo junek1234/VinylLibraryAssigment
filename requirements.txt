@@ -8,6 +8,6 @@
 [done] Select one Vinyl and Reserve, Borrow or Return it.
 [done] Remove a Vinyl (mark it to be removed until it is allowed to actually be removed).
 [done] Optionally, you may include the information that a Vinyl is about to be removed.
-[] Optionally, you may create a window to add a new Vinyl.
+[done] Optionally, you may create a window to add a new Vinyl.
 
 

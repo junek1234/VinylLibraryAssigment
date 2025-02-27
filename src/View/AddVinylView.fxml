@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AddVinylView">
+   <children>
+      <TextField fx:id="titleTextField" promptText="Title..." />
+      <TextField fx:id="artistTextField" promptText="Artist..." />
+      <TextField fx:id="yearTextField" promptText="Year of release..." />
+      <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddVinyl" text="Add" />
+   </children>
+</VBox>
