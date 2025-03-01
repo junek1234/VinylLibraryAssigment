@@ -41,7 +41,7 @@ public class User implements Runnable
       Random rand = new Random();
       try
       {
-        Thread.sleep(rand.nextInt(2000)+1000);
+        Thread.sleep(rand.nextInt(3000)+100);
       }
       catch (InterruptedException e)
       {

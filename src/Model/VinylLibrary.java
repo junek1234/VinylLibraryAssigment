@@ -22,10 +22,12 @@ public class VinylLibrary implements PropertyChangeSubject
   }
   public synchronized void removeVinyl(int vinylID)
   {
+
     Thread thread = new Thread(()->{
-      vinyls.get(vinylID).setRemoveFlag();
+      Vinyl vinylToRemove = vinyls.get(vinylID);
+      vinylToRemove.setRemoveFlag();
       firePropertyChange();
-      while(!vinyls.get(vinylID).currentState.getClass().getSimpleName().equals("AvailableState"))
+      while(!vinylToRemove.currentState.getClass().getSimpleName().equals("AvailableState"))
       {
         try
         {
@@ -36,7 +38,7 @@ public class VinylLibrary implements PropertyChangeSubject
           throw new RuntimeException(e);
         }
       }
-      vinyls.remove(vinylID);
+      vinyls.removeIf(v -> v == vinylToRemove);
       firePropertyChange();
     });
     thread.setDaemon(true);

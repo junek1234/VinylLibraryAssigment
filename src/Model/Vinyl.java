@@ -3,12 +3,12 @@ package Model;
 public class Vinyl
 {
   VinylState currentState, availableState, borrowedState, reservedState, borrowedReservedState;
-  private String title;
-  private String artist;
-  private int releaseYear;
-  private int reservedBy;//add this to Astah
-  private int borrowedBy;//asd
-  private String status;//asd
+  private final String title;
+  private final String artist;
+  private final int releaseYear;
+  private int reservedBy;
+  private int borrowedBy;
+  private String status;
   private boolean removeFlag;
 
   public String getTitle()
