@@ -1,7 +1,7 @@
 [done] You must use the MVVM Design Pattern.
 [done] You must use the Observer Design Pattern.
 [done] You must use the State Design Pattern for the different states of a Model.Vinyl.
-[] You must use Threads for the simulation and still be able to use the system at the same time (in the GUI)
+[done] You must use Threads for the simulation and still be able to use the system at the same time (in the GUI)
 [done] You must create a UML State Machine Diagram for the Model.Vinyl states (preferably in Astah).
 [done] You must create a UML Class Diagram for the final solution (preferably in Astah).
 [done] See a list of Vinyls with their information, including their states.

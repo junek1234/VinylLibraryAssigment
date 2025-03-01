@@ -4,6 +4,7 @@ import Model.Vinyl;
 import Model.VinylLibrary;
 import View.AddVinylView;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ public class VinylLibraryViewModel
   private IntegerProperty userID;
 
 
-
   public VinylLibraryViewModel(VinylLibrary vinylLibrary)
   {
     this.vinylLibrary = vinylLibrary;
@@ -33,13 +33,13 @@ public class VinylLibraryViewModel
 
   private void update(PropertyChangeEvent event)
   {
-    //save current selection
-    vinyls.clear();
-    List<Vinyl> newVinyls =(List<Vinyl>) event.getNewValue();
-    vinyls.addAll(newVinyls);
-    //restore selection
-  }
 
+
+    List<Vinyl> newVinyls =(List<Vinyl>) event.getNewValue();
+    vinyls.setAll(newVinyls);
+
+
+  }
 
   public ObservableList<Vinyl> getVinyls()
   {

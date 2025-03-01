@@ -1,16 +1,11 @@
 package View;
 
 import Model.Vinyl;
-import ViewModel.AddVinylViewModel;
 import ViewModel.VinylLibraryViewModel;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
 public class VinylLibraryView
@@ -47,6 +42,7 @@ public class VinylLibraryView
     releaseYear.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
     status.setCellValueFactory(new PropertyValueFactory<>("status"));
     tableView.setItems(vinyls);
+
   }
 
   public void onBorrowButtonPressed()
@@ -82,4 +78,5 @@ public class VinylLibraryView
   {
     listViewModel.onAdd();
   }
+
 }
