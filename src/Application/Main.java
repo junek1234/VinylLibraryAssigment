@@ -21,6 +21,7 @@ public class Main extends Application
     launch();
   }
 
+  
   @Override public void start(Stage primaryStage) throws Exception
   {
     VinylLibrary vinylLibrary = new VinylLibrary();

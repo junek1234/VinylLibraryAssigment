@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AddVinylView">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/22"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AddVinylView">
    <children>
       <TextField fx:id="titleTextField" promptText="Title..." />
       <TextField fx:id="artistTextField" promptText="Artist..." />
