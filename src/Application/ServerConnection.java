@@ -1,6 +1,7 @@
 
 package Application;
 
+import Model.Message;
 import Model.Vinyl;
 import Model.VinylLibrary;
 
@@ -31,12 +32,9 @@ public class ServerConnection implements Runnable
     {
       try
       {
-        String message = (String) inFromClient.readObject();
-        System.out.println("Received: " + message);
-        if(message.equals("Reserve"))
-        {
-          vinylLibrary.reserveVinyl(1,0);
-        }
+        Message message = (Message) inFromClient.readObject();
+//        System.out.println("Received: " + message);
+        actionIF(message);
         connectionPool.broadcast(vinylLibrary.getVinyls().get(0).getStatus());
       }
       catch (IOException | ClassNotFoundException e)
@@ -49,5 +47,51 @@ public class ServerConnection implements Runnable
   public void send(String message) throws IOException
   {
     outToClient.writeObject(message);
+  }
+  public void borrowVinyl(int clientID, int vinylID)
+  {
+    vinylLibrary.borrowVinyl(clientID, vinylID);
+  }
+  public void reserveVinyl(int clientID, int vinylID)
+  {
+    vinylLibrary.reserveVinyl(clientID, vinylID);
+  }
+  public void returnVinyl(int clientID, int vinylID)
+  {
+    vinylLibrary.returnVinyl(clientID, vinylID);
+  }
+  public void cancelReservation(int clientID, int vinylID)
+  {
+    vinylLibrary.cancelReservation(clientID, vinylID);
+  }
+  public void actionIF(Message message)
+  {
+    if(message.getAction().equals("Borrow"))
+    {
+      borrowVinyl(message.getClientID(), message.getVinylID());
+    }
+    else if(message.getAction().equals("Reserve"))
+    {
+      reserveVinyl(message.getClientID(), message.getVinylID());
+    }
+    else if(message.getAction().equals("Return"))
+    {
+      returnVinyl(message.getClientID(), message.getVinylID());
+    }
+    else if(message.getAction().equals("Cancel"))
+    {
+      cancelReservation(message.getClientID(), message.getVinylID());
+    }
+    else
+    {
+      try{
+        send("error");
+      }
+      catch (IOException e)
+      {
+        throw new RuntimeException(e);
+      }
+
+    }
   }
 }

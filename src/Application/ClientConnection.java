@@ -1,6 +1,8 @@
 
 package Application;
 
+import Model.Message;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -35,7 +37,7 @@ public class ClientConnection implements Runnable
     }
   }
 
-  public void send(String message) throws IOException
+  public void send(Message message) throws IOException
   {
     outToServer.writeObject(message);
   }
