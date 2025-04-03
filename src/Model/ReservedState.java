@@ -1,6 +1,8 @@
 package Model;
 
-public class ReservedState implements VinylState
+import java.io.Serializable;
+
+public class ReservedState implements VinylState, Serializable
 {
 
   @Override public void onBorrow(Vinyl vinyl, int clientID)

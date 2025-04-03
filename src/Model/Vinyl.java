@@ -1,6 +1,8 @@
 package Model;
 
-public class Vinyl
+import java.io.Serializable;
+
+public class Vinyl implements Serializable
 {
   VinylState currentState, availableState, borrowedState, reservedState, borrowedReservedState;
   private final String title;

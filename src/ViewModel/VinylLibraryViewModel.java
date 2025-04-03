@@ -1,5 +1,6 @@
 package ViewModel;
 
+import Model.ClientModel;
 import Model.Vinyl;
 import Model.VinylLibrary;
 import View.AddVinylView;
@@ -15,19 +16,20 @@ import javafx.stage.Stage;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.List;
+import Model.Vinyl;
 
 public class VinylLibraryViewModel
 {
-  private VinylLibrary vinylLibrary;
+  private ClientModel clientModel;
   private ObservableList<Vinyl> vinyls;
   private IntegerProperty userID;
 
 
-  public VinylLibraryViewModel(VinylLibrary vinylLibrary)
+  public VinylLibraryViewModel(ClientModel clientModel)
   {
-    this.vinylLibrary = vinylLibrary;
+    this.clientModel = clientModel;
     vinyls= FXCollections.observableArrayList();
-    vinylLibrary.addPropertyChangeListener("Vinyls",this::update);
+    clientModel.addPropertyChangeListener("Vinyls",this::update);
     userID = new SimpleIntegerProperty();
   }
 
@@ -53,28 +55,28 @@ public class VinylLibraryViewModel
 
   public void onBorrow(Vinyl vinyl)
   {
-    vinylLibrary.borrowVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+    clientModel.borrowVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
   }
   public void onReserve(Vinyl vinyl)
   {
-    vinylLibrary.reserveVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+    clientModel.reserveVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
   }
   public void onReturn(Vinyl vinyl)
   {
-    vinylLibrary.returnVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
+    clientModel.returnVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
   }
   public void onCancel(Vinyl vinyl)
   {
-    vinylLibrary.cancelReservation(getUserIDProperty().getValue(),findIndex(vinyl));
+    clientModel.cancelReservation(getUserIDProperty().getValue(),findIndex(vinyl));
   }
   public void onRemove(Vinyl vinyl)
   {
-    vinylLibrary.removeVinyl(findIndex(vinyl));
+//    clientModel.removeVinyl(findIndex(vinyl));
   }
 
   public void onAdd()
   {
-    AddVinylViewModel addViewModel = new AddVinylViewModel(vinylLibrary);
+    AddVinylViewModel addViewModel = new AddVinylViewModel(clientModel);
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/AddVinylView.fxml"));
     fxmlLoader.setControllerFactory(controllerClass -> new AddVinylView(addViewModel));
 
@@ -94,9 +96,9 @@ public class VinylLibraryViewModel
   }
   public int findIndex(Vinyl vinyl)
   {
-    for (int i = 0; i < vinylLibrary.getVinyls().size(); i++)
+    for (int i = 0; i < clientModel.getVinyls().size(); i++)
     {
-      if(vinylLibrary.getVinyls().get(i)==vinyl)
+      if(clientModel.getVinyls().get(i)==vinyl)
       {
         return i;
       }

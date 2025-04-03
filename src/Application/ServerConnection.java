@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class ServerConnection implements Runnable
 {
@@ -28,6 +29,14 @@ public class ServerConnection implements Runnable
   @Override
   public void run()
   {
+    try
+    {
+      updateList(vinylLibrary.getVinyls());
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
     while(true)
     {
       try
@@ -47,6 +56,10 @@ public class ServerConnection implements Runnable
   public void send(String message) throws IOException
   {
     outToClient.writeObject(message);
+  }
+  public void updateList(List<Vinyl> vinylList) throws IOException
+  {
+    outToClient.writeObject(vinylList);
   }
   public void borrowVinyl(int clientID, int vinylID)
   {
