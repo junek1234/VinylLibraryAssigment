@@ -12,18 +12,15 @@ import java.util.List;
 public class ClientModel implements PropertyChangeSubject
 {
   private List<Vinyl> vinyls;
-  private int clientID;
-  private Message message;
   private PropertyChangeSupport support;
   private ClientConnection clientConnection;
 
-  public ClientModel(int clientID) throws IOException
+  public ClientModel() throws IOException
   {
     Socket socket = new Socket("localhost", 2910);
     clientConnection = new ClientConnection(socket, this);
     new Thread(clientConnection).start();
 
-    this.clientID=clientID;
     vinyls= new ArrayList<>();
     support = new PropertyChangeSupport(this);
     //      while(true)
@@ -36,6 +33,8 @@ public class ClientModel implements PropertyChangeSubject
     //        clientConnection.send(new Message(clientID, vinyl, stringToSend ));
     //      }
   }
+
+
   public List<Vinyl> getVinyls()
   {
     return vinyls;
@@ -44,6 +43,7 @@ public class ClientModel implements PropertyChangeSubject
   public void setVinyls(List<Vinyl> vinyls)
   {
     this.vinyls = vinyls;
+    firePropertyChange();
   }
 
   public void borrowVinyl(int clientID, int vinylID)

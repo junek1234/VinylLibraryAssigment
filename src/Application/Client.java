@@ -2,7 +2,10 @@ package Application;
 
 import Model.ClientModel;
 import Model.Message;
+import Model.Vinyl;
+import View.LoginView;
 import View.VinylLibraryView;
+import ViewModel.LoginViewModel;
 import ViewModel.VinylLibraryViewModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,18 +28,13 @@ public class Client extends Application
 
     try
     {
-
-      //this should be in a separate window login or sth - this needs to be changed
-      System.out.println("ID: ");
-      int clientID= scanner.nextInt();
-
-      ClientModel clientModel = new ClientModel(clientID);
-      VinylLibraryViewModel viewModel = new VinylLibraryViewModel(clientModel);
+      ClientModel clientModel = new ClientModel();
+      VinylLibraryViewModel viewModel = new VinylLibraryViewModel((clientModel));
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/VinylLibraryView.fxml"));
       fxmlLoader.setControllerFactory(controllerClass -> new VinylLibraryView(viewModel));
 
       Scene sceneLibraryList = new Scene(fxmlLoader.load());
-      primaryStage.setTitle("Vinyl Library");
+      primaryStage.setTitle("Client");
       primaryStage.setScene(sceneLibraryList);
       primaryStage.show();
 

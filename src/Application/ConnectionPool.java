@@ -1,6 +1,8 @@
 
 package Application;
 
+import Model.Vinyl;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +21,11 @@ public class ConnectionPool
     connections.add(serverConnection);
   }
 
-  public void broadcast(String message) throws IOException
+  public void broadcast(List<Vinyl> vinyls) throws IOException
   {
     for (ServerConnection connection : connections)
     {
-      connection.send(message);
+      connection.send(vinyls);
     }
   }
 

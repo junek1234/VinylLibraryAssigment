@@ -32,11 +32,11 @@ public class ClientConnection implements Runnable
     {
       List<Vinyl> vinylList = (List<Vinyl>) inFromServer.readObject();
       clientModel.setVinyls(vinylList);
-      clientModel.firePropertyChange();
       while (true)
       {
-        String message = (String) inFromServer.readObject();
-        System.out.println("Message received: " + message);
+        vinylList = (List<Vinyl>) inFromServer.readObject();
+        System.out.println(vinylList.getFirst().getStatus());
+        clientModel.setVinyls(vinylList);
       }
     }
     catch (IOException | ClassNotFoundException e)

@@ -44,7 +44,8 @@ public class ServerConnection implements Runnable
         Message message = (Message) inFromClient.readObject();
 //        System.out.println("Received: " + message);
         actionIF(message);
-        connectionPool.broadcast(vinylLibrary.getVinyls().get(0).getStatus());
+        connectionPool.broadcast(vinylLibrary.getVinyls());//for now it is being updated even if the request was wrong
+        System.out.println(vinylLibrary.getVinyls().getFirst().getStatus());
       }
       catch (IOException | ClassNotFoundException e)
       {
@@ -53,9 +54,10 @@ public class ServerConnection implements Runnable
     }
   }
 
-  public void send(String message) throws IOException
+  public void send(List<Vinyl> vinyls) throws IOException
   {
-    outToClient.writeObject(message);
+    outToClient.reset();
+    outToClient.writeObject(vinyls);
   }
   public void updateList(List<Vinyl> vinylList) throws IOException
   {
@@ -79,6 +81,9 @@ public class ServerConnection implements Runnable
   }
   public void actionIF(Message message)
   {
+    //i should use strategy pattern here maybe
+
+    
     if(message.getAction().equals("Borrow"))
     {
       borrowVinyl(message.getClientID(), message.getVinylID());
@@ -97,14 +102,8 @@ public class ServerConnection implements Runnable
     }
     else
     {
-      try{
-        send("error");
-      }
-      catch (IOException e)
-      {
-        throw new RuntimeException(e);
-      }
 
+        System.out.println("error");
     }
   }
 }

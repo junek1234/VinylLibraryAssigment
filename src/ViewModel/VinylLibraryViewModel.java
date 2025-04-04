@@ -4,6 +4,7 @@ import Model.ClientModel;
 import Model.Vinyl;
 import Model.VinylLibrary;
 import View.AddVinylView;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -38,7 +39,10 @@ public class VinylLibraryViewModel
 
 
     List<Vinyl> newVinyls =(List<Vinyl>) event.getNewValue();
-    vinyls.setAll(newVinyls);
+
+    Platform.runLater(() -> {
+      vinyls.setAll(newVinyls);
+    });
 
 
   }
