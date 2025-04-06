@@ -24,6 +24,7 @@ public class VinylLibraryView
   @FXML TableColumn<Vinyl, String> artist;
   @FXML TableColumn<Vinyl, Integer> releaseYear;
   @FXML TableColumn<Vinyl, String> status;
+  @FXML TextArea messagesTextArea;
 
   public VinylLibraryView(VinylLibraryViewModel listViewModel)
   {
@@ -42,36 +43,57 @@ public class VinylLibraryView
     releaseYear.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
     status.setCellValueFactory(new PropertyValueFactory<>("status"));
     tableView.setItems(vinyls);
+    messagesTextArea.textProperty().bindBidirectional(listViewModel.messagesProperty());
 
   }
 
   public void onBorrowButtonPressed()
   {
-    Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
-    listViewModel.onBorrow(selectedItem);
+    if(tableView.getSelectionModel().getSelectedItem()!=null)
+    {
+      Vinyl selectedItem = (Vinyl) tableView.getSelectionModel()
+          .getSelectedItem();
+      listViewModel.onBorrow(selectedItem);
+    }
   }
 
   public void onReserveButtonPressed()
   {
-    Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
-    listViewModel.onReserve(selectedItem);
+    if(tableView.getSelectionModel().getSelectedItem()!=null)
+    {
+      Vinyl selectedItem = (Vinyl) tableView.getSelectionModel()
+          .getSelectedItem();
+      listViewModel.onReserve(selectedItem);
+    }
   }
 
   public void onReturnButtonPressed()
   {
-    Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
-    listViewModel.onReturn(selectedItem);
+    if(tableView.getSelectionModel().getSelectedItem()!=null)
+    {
+      Vinyl selectedItem = (Vinyl) tableView.getSelectionModel()
+          .getSelectedItem();
+      listViewModel.onReturn(selectedItem);
+    }
   }
   public void onCancelButtonPressed()
   {
-    Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
-    listViewModel.onCancel(selectedItem);
+    if(tableView.getSelectionModel().getSelectedItem()!=null)
+    {
+      Vinyl selectedItem = (Vinyl) tableView.getSelectionModel()
+          .getSelectedItem();
+      listViewModel.onCancel(selectedItem);
+    }
   }
 
   public void onRemoveButtonPressed()
   {
-    Vinyl selectedItem = (Vinyl) tableView.getSelectionModel().getSelectedItem();
-    listViewModel.onRemove(selectedItem);
+    if(tableView.getSelectionModel().getSelectedItem()!=null)
+    {
+      Vinyl selectedItem = (Vinyl) tableView.getSelectionModel()
+          .getSelectedItem();
+      listViewModel.onRemove(selectedItem);
+    }
   }
 
   public void onAddButtonPressed()

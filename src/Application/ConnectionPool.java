@@ -1,6 +1,7 @@
 
 package Application;
 
+import Model.ServerPacket;
 import Model.Vinyl;
 
 import java.io.IOException;
@@ -21,12 +22,30 @@ public class ConnectionPool
     connections.add(serverConnection);
   }
 
-  public void broadcast(List<Vinyl> vinyls) throws IOException
-  {
-    for (ServerConnection connection : connections)
-    {
-      connection.send(vinyls);
+  public void broadcastPacket(ServerPacket packet) {
+    for (ServerConnection connection : connections) {
+      try {
+        connection.sendPacket(packet);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
+//  public void broadcastList(List<Vinyl> vinyls) throws IOException
+//  {
+//    for (ServerConnection connection : connections)
+//    {
+//      connection.updateList(vinyls);
+//
+//    }
+//  }
+//  public void broadcastMessage( String message) throws IOException
+//  {
+//    for (ServerConnection connection : connections)
+//    {
+//
+//      connection.sendMessage(message);
+//    }
+//  }
 
 }

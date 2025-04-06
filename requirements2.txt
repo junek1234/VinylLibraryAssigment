@@ -1,13 +1,13 @@
 [done] The application must use Sockets connecting client and server, with the server being multithreaded
-[] The client must at least be able to:
+[done] The client must at least be able to:
 [done] Get a list of all Vinyls
 [done] Reserve, borrow, and return a Vinyl
-[] Receive messages broadcasted (multicasted) when a Vinyl changes lending state, and when a Vinyl has been removed (e.g. by the server)
+[done] Receive messages broadcasted (multicasted) when a Vinyl changes lending state, and when a Vinyl has been removed (e.g. by the server)
 [] (Optional) All messages between client and server must be in JSON format, error messages from server included.
 [] You must make a class diagram for the full solution (in Astah).
   In the diagram you must be able to identify the MVVM, the Observer pattern and the design of the socket related classes
 [done] You must use Java Sockets to connect the Client and Server
-[] You must use the MVVM Design Pattern with at least two views, (maybe you already did this in Assignment 1. If not, you must do it now).
+[done] You must use the MVVM Design Pattern with at least two views, (maybe you already did this in Assignment 1. If not, you must do it now).
 [done] You must use the Observer Design Pattern .
 [] You must use the Singleton (and/or Multiton) Design Pattern as a log to the server console and to file(s).
   It should always be possible to find all the communication for an entire day –text, IP address, date and time.

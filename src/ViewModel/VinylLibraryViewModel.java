@@ -5,9 +5,7 @@ import Model.Vinyl;
 import Model.VinylLibrary;
 import View.AddVinylView;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +22,7 @@ public class VinylLibraryViewModel
   private ClientModel clientModel;
   private ObservableList<Vinyl> vinyls;
   private IntegerProperty userID;
+  private StringProperty messages;
 
 
   public VinylLibraryViewModel(ClientModel clientModel)
@@ -31,7 +30,25 @@ public class VinylLibraryViewModel
     this.clientModel = clientModel;
     vinyls= FXCollections.observableArrayList();
     clientModel.addPropertyChangeListener("Vinyls",this::update);
+    clientModel.addPropertyChangeListener("Message", this::addMessage);
     userID = new SimpleIntegerProperty();
+    messages = new SimpleStringProperty();
+  }
+
+  private void addMessage(PropertyChangeEvent event)
+  {
+    String newMessages;
+    if(getMessages()!=null)
+    {
+      newMessages=getMessages();
+      newMessages+=event.getNewValue()+"\n";
+    }
+    else
+    {
+      newMessages=event.getNewValue()+"\n";
+    }
+
+    messages.set(newMessages);
   }
 
   private void update(PropertyChangeEvent event)
@@ -45,6 +62,21 @@ public class VinylLibraryViewModel
     });
 
 
+  }
+
+  public String getMessages()
+  {
+    return messages.get();
+  }
+
+  public StringProperty messagesProperty()
+  {
+    return messages;
+  }
+
+  public void setMessages(String messages)
+  {
+    this.messages.set(messages);
   }
 
   public ObservableList<Vinyl> getVinyls()
@@ -75,12 +107,12 @@ public class VinylLibraryViewModel
   }
   public void onRemove(Vinyl vinyl)
   {
-//    clientModel.removeVinyl(findIndex(vinyl));
+    clientModel.removeVinyl(getUserIDProperty().getValue(),findIndex(vinyl));
   }
 
   public void onAdd()
   {
-    AddVinylViewModel addViewModel = new AddVinylViewModel(clientModel);
+    AddVinylViewModel addViewModel = new AddVinylViewModel(clientModel, this);
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/AddVinylView.fxml"));
     fxmlLoader.setControllerFactory(controllerClass -> new AddVinylView(addViewModel));
 

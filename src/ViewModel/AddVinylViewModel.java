@@ -14,18 +14,22 @@ public class AddVinylViewModel
   private StringProperty title;
   private StringProperty artist;
   private IntegerProperty releaseYear;
+  private IntegerProperty clientID;
+  private VinylLibraryViewModel vinylLibraryViewModel;
 
-  public AddVinylViewModel(ClientModel clientModel)
+  public AddVinylViewModel(ClientModel clientModel, VinylLibraryViewModel vinylLibraryViewModel)
   {
    this.clientModel=clientModel;
     title = new SimpleStringProperty();
     artist = new SimpleStringProperty();
     releaseYear = new SimpleIntegerProperty();
+    this.vinylLibraryViewModel=vinylLibraryViewModel;
+    clientID=vinylLibraryViewModel.getUserIDProperty();
   }
 
   public void addVinyl()
   {
-//    vinylLibrary.addVinyl(new Vinyl(title.get(), artist.get(), releaseYear.get()));
+    clientModel.addVinyl(clientID.getValue() ,title.get(), artist.get(), releaseYear.get());
   }
 
   public StringProperty titleProperty()

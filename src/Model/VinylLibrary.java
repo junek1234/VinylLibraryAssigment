@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VinylLibrary implements PropertyChangeSubject
 {
@@ -18,7 +19,7 @@ public class VinylLibrary implements PropertyChangeSubject
   public synchronized void addVinyl(Vinyl vinyl)
   {
     vinyls.add(vinyl);
-    firePropertyChange();
+    firePropertyChangeAdd(vinyl.getTitle());
   }
   public synchronized void removeVinyl(int vinylID)
   {
@@ -26,7 +27,8 @@ public class VinylLibrary implements PropertyChangeSubject
     Thread thread = new Thread(()->{
       Vinyl vinylToRemove = vinyls.get(vinylID);
       vinylToRemove.setRemoveFlag();
-      firePropertyChange();
+      firePropertyChangeToBeRemoved(vinylToRemove.getTitle());
+
       while(!vinylToRemove.currentState.getClass().getSimpleName().equals("AvailableState"))
       {
         try
@@ -38,8 +40,10 @@ public class VinylLibrary implements PropertyChangeSubject
           throw new RuntimeException(e);
         }
       }
+
       vinyls.removeIf(v -> v == vinylToRemove);
-      firePropertyChange();
+      firePropertyChangeRemoved(vinylToRemove.getTitle());
+
     });
     thread.setDaemon(true);
     thread.start();
@@ -47,23 +51,43 @@ public class VinylLibrary implements PropertyChangeSubject
   }
   public synchronized void borrowVinyl(int clientID, int vinylID)
   {
+    String oldStatus= vinyls.get(vinylID).getStatus();
     vinyls.get(vinylID).onBorrow(clientID);
-    firePropertyChange();
+    if(!vinyls.get(vinylID).getStatus().equals(oldStatus))
+    {
+      firePropertyChangeStatusChange(vinyls.get(vinylID).getTitle()+" has been borrowed");
+    }
+
   }
   public synchronized void reserveVinyl(int clientID, int vinylID)
   {
+    String oldStatus= vinyls.get(vinylID).getStatus();
     vinyls.get(vinylID).onReserve(clientID);
-    firePropertyChange();
+    if(!vinyls.get(vinylID).getStatus().equals(oldStatus))
+    {
+      firePropertyChangeStatusChange(vinyls.get(vinylID).getTitle()+" has been reserved");
+    }
+
   }
   public synchronized void returnVinyl(int clientID, int vinylID)
   {
+    String oldStatus= vinyls.get(vinylID).getStatus();
     vinyls.get(vinylID).onReturn(clientID);
-    firePropertyChange();
+    if(!vinyls.get(vinylID).getStatus().equals(oldStatus))
+    {
+      firePropertyChangeStatusChange(vinyls.get(vinylID).getTitle()+" has been returned");
+    }
+
   }
   public synchronized void cancelReservation(int clientID, int vinylID)
   {
+    String oldStatus= vinyls.get(vinylID).getStatus();
     vinyls.get(vinylID).onCancel(clientID);
-    firePropertyChange();
+    if(!vinyls.get(vinylID).getStatus().equals(oldStatus))
+    {
+      firePropertyChangeStatusChange(vinyls.get(vinylID).getTitle()+" has been cancelled");
+    }
+
   }
 
   public List<Vinyl> getVinyls()
@@ -94,8 +118,22 @@ public class VinylLibrary implements PropertyChangeSubject
   {
     support.removePropertyChangeListener(name, listener);
   }
-  public void firePropertyChange()
+  public void firePropertyChangeRemoved(String vinylTitle)
   {
-    support.firePropertyChange("Vinyls",null, vinyls);
+    support.firePropertyChange("Removed",null, vinylTitle);
   }
+  public void firePropertyChangeToBeRemoved(String vinylTitle)
+  {
+    support.firePropertyChange("ToBeRemoved",null, vinylTitle);
+  }
+  public void firePropertyChangeStatusChange(String vinylTitle)
+  {
+    support.firePropertyChange("Status",null, vinylTitle);
+  }
+  public void firePropertyChangeAdd(String vinylTitle)
+  {
+    support.firePropertyChange("Add",null, vinylTitle);
+  }
+
+
 }

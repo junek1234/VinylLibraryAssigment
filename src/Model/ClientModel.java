@@ -14,6 +14,7 @@ public class ClientModel implements PropertyChangeSubject
   private List<Vinyl> vinyls;
   private PropertyChangeSupport support;
   private ClientConnection clientConnection;
+  private String message;
 
   public ClientModel() throws IOException
   {
@@ -23,15 +24,7 @@ public class ClientModel implements PropertyChangeSubject
 
     vinyls= new ArrayList<>();
     support = new PropertyChangeSupport(this);
-    //      while(true)
-    //      {
-    //        System.out.println("Vinyl: ");
-    //        int vinyl = scanner.nextInt();
-    //        scanner.nextLine();
-    //        System.out.println("action: ");
-    //        String stringToSend = scanner.nextLine();
-    //        clientConnection.send(new Message(clientID, vinyl, stringToSend ));
-    //      }
+
   }
 
 
@@ -43,7 +36,12 @@ public class ClientModel implements PropertyChangeSubject
   public void setVinyls(List<Vinyl> vinyls)
   {
     this.vinyls = vinyls;
-    firePropertyChange();
+    firePropertyChangeVinylList();
+  }
+  public void setMessage(String message)
+  {
+    this.message=message;
+    firePropertyChangeNewMessage();
   }
 
   public void borrowVinyl(int clientID, int vinylID)
@@ -56,7 +54,7 @@ public class ClientModel implements PropertyChangeSubject
     {
       throw new RuntimeException(e);
     }
-//    firePropertyChange();
+
   }
   public void reserveVinyl(int clientID, int vinylID)
   {
@@ -68,7 +66,7 @@ public class ClientModel implements PropertyChangeSubject
     {
       throw new RuntimeException(e);
     }
-    //    firePropertyChange();
+
   }
   public void returnVinyl(int clientID, int vinylID)
   {
@@ -80,7 +78,7 @@ public class ClientModel implements PropertyChangeSubject
     {
       throw new RuntimeException(e);
     }
-    //    firePropertyChange();
+
   }
   public void cancelReservation(int clientID, int vinylID)
   {
@@ -92,7 +90,29 @@ public class ClientModel implements PropertyChangeSubject
     {
       throw new RuntimeException(e);
     }
-    //    firePropertyChange();
+
+  }
+  public void removeVinyl(int clientID, int vinylID)
+  {
+    try
+    {
+      clientConnection.send(new Message(clientID, vinylID, "Remove"));
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
+  public void addVinyl(int clientID, String title, String artist, int releaseYear)
+  {
+    try
+    {
+      clientConnection.send(new Message(clientID, title, artist,releaseYear, "Add"));
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
   }
   @Override public void addPropertyChangeListener(
       PropertyChangeListener listener)
@@ -117,8 +137,22 @@ public class ClientModel implements PropertyChangeSubject
   {
     support.removePropertyChangeListener(name, listener);
   }
-  public void firePropertyChange()
+  public void firePropertyChangeVinylList()
   {
     support.firePropertyChange("Vinyls",null, vinyls);
+  }
+  public void firePropertyChangeNewMessage()
+  {
+    support.firePropertyChange("Message", null, message);
+  }
+
+  public String getMessage()
+  {
+    return message;
+  }
+
+  public void newMessage(String message)
+  {
+    this.message = message;
   }
 }

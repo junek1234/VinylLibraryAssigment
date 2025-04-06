@@ -13,6 +13,23 @@ public class Vinyl implements Serializable
   private String status;
   private boolean removeFlag;
 
+  public Vinyl(Vinyl other)
+  {
+    this.currentState=other.currentState;
+    this.availableState=other.availableState;
+    this.borrowedBy=other.borrowedBy;
+    this.reservedBy=other.reservedBy;
+    this.borrowedReservedState=other.borrowedReservedState;
+    this.title=other.title;
+    this.artist=other.artist;
+    this.releaseYear=other.releaseYear;
+    this.reservedBy=other.reservedBy;
+    this.borrowedBy=other.borrowedBy;
+    this.status=other.status;
+    this.removeFlag=other.removeFlag;
+
+
+  }
   public String getTitle()
   {
     return title;

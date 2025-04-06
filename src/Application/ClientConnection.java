@@ -3,6 +3,7 @@ package Application;
 
 import Model.ClientModel;
 import Model.Message;
+import Model.ServerPacket;
 import Model.Vinyl;
 
 import java.io.IOException;
@@ -28,21 +29,23 @@ public class ClientConnection implements Runnable
   @Override
   public void run()
   {
-    try
-    {
-      List<Vinyl> vinylList = (List<Vinyl>) inFromServer.readObject();
-      clientModel.setVinyls(vinylList);
-      while (true)
-      {
-        vinylList = (List<Vinyl>) inFromServer.readObject();
-        System.out.println(vinylList.getFirst().getStatus());
-        clientModel.setVinyls(vinylList);
+    try {
+      while (true) {
+        Object obj = inFromServer.readObject();
+        ServerPacket serverPacket= (ServerPacket)obj;
+
+          if (serverPacket.getVinyls() != null) {
+            clientModel.setVinyls(serverPacket.getVinyls());
+          }
+          if (serverPacket.getMessage() != null && !serverPacket.getMessage().equals("nothing")) {
+            clientModel.setMessage(serverPacket.getMessage());
+          }
+
       }
-    }
-    catch (IOException | ClassNotFoundException e)
-    {
+    } catch (IOException | ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
+
   }
 
   public void send(Message message) throws IOException

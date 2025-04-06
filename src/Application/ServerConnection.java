@@ -2,6 +2,7 @@
 package Application;
 
 import Model.Message;
+import Model.ServerPacket;
 import Model.Vinyl;
 import Model.VinylLibrary;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServerConnection implements Runnable
@@ -29,12 +31,10 @@ public class ServerConnection implements Runnable
   @Override
   public void run()
   {
-    try
-    {
-      updateList(vinylLibrary.getVinyls());
-    }
-    catch (IOException e)
-    {
+
+    try {
+      sendPacket(new ServerPacket(vinylLibrary.getVinyls(), null));
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
     while(true)
@@ -42,10 +42,12 @@ public class ServerConnection implements Runnable
       try
       {
         Message message = (Message) inFromClient.readObject();
-//        System.out.println("Received: " + message);
         actionIF(message);
-        connectionPool.broadcast(vinylLibrary.getVinyls());//for now it is being updated even if the request was wrong
-        System.out.println(vinylLibrary.getVinyls().getFirst().getStatus());
+
+        connectionPool.broadcastPacket(new ServerPacket(vinylLibrary.getVinyls(), "nothing"));
+
+
+
       }
       catch (IOException | ClassNotFoundException e)
       {
@@ -54,15 +56,15 @@ public class ServerConnection implements Runnable
     }
   }
 
-  public void send(List<Vinyl> vinyls) throws IOException
-  {
+  public synchronized void sendPacket(ServerPacket packet) throws IOException {
     outToClient.reset();
-    outToClient.writeObject(vinyls);
+    outToClient.writeObject(packet);
   }
-  public void updateList(List<Vinyl> vinylList) throws IOException
+  public void sendMessage(String message) throws IOException
   {
-    outToClient.writeObject(vinylList);
+    connectionPool.broadcastPacket(new ServerPacket(vinylLibrary.getVinyls(), message));
   }
+
   public void borrowVinyl(int clientID, int vinylID)
   {
     vinylLibrary.borrowVinyl(clientID, vinylID);
@@ -79,11 +81,22 @@ public class ServerConnection implements Runnable
   {
     vinylLibrary.cancelReservation(clientID, vinylID);
   }
+  public void removeVinyl(int clientID, int vinylID)
+  {
+    vinylLibrary.removeVinyl(vinylID);
+  }
+  public void addVinyl(int clientID, String title, String artist, int releaseYear)
+  {
+    vinylLibrary.addVinyl(new Vinyl(title, artist, releaseYear));
+  }
   public void actionIF(Message message)
   {
     //i should use strategy pattern here maybe
+    List<Vinyl> beforeChangeVinyls = new ArrayList<>();
+    for (Vinyl v : vinylLibrary.getVinyls()) {
+      beforeChangeVinyls.add(new Vinyl(v)); // deep copy
+    }
 
-    
     if(message.getAction().equals("Borrow"))
     {
       borrowVinyl(message.getClientID(), message.getVinylID());
@@ -100,10 +113,21 @@ public class ServerConnection implements Runnable
     {
       cancelReservation(message.getClientID(), message.getVinylID());
     }
+    else if (message.getAction().equals("Remove"))
+    {
+      removeVinyl(message.getClientID(), message.getVinylID());
+    }
+    else if (message.getAction().equals("Add"))
+    {
+      addVinyl(message.getClientID(), message.getTitle(), message.getAuthor(),
+          message.getYearOfRelease());
+    }
     else
     {
-
         System.out.println("error");
     }
+
+
   }
+
 }
