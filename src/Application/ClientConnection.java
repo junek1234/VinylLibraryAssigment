@@ -37,7 +37,7 @@ public class ClientConnection implements Runnable
           if (serverPacket.getVinyls() != null) {
             clientModel.setVinyls(serverPacket.getVinyls());
           }
-          if (serverPacket.getMessage() != null && !serverPacket.getMessage().equals("nothing")) {
+          if (serverPacket.getMessage() != null && !serverPacket.getMessage().equals("onlyVinyls")) {
             clientModel.setMessage(serverPacket.getMessage());
           }
 

@@ -24,7 +24,7 @@ public class Client extends Application
   }
   @Override public void start(Stage primaryStage) throws Exception
   {
-    Scanner scanner = new Scanner(System.in);
+
 
     try
     {

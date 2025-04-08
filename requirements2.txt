@@ -12,7 +12,7 @@
 [done] You must use the Singleton (and/or Multiton) Design Pattern as a log to the server console and to file(s).
   It should always be possible to find all the communication for an entire day –text, IP address, date and time.
 [] !IMPORTANT! test this /\ with different devices
-[in progress] You must use the Strategy Design Pattern
+[done] You must use the Strategy Design Pattern
 [] You must create a UML Class Diagram for the final solution (preferably in Astah).
 [] Documentation of your protocol (messages, syntax and actions).
 [] Annotated printout from Wireshark that show the following information:

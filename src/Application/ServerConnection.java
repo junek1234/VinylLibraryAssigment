@@ -9,7 +9,9 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServerConnection implements Runnable
 {
@@ -20,6 +22,7 @@ public class ServerConnection implements Runnable
   private final Log log;
   private final String clientIP;
   private final String serverIP;
+  private final Map<String, ActionStrategy> strategies;
 
   public ServerConnection(Socket connectionSocket, ConnectionPool connectionPool, VinylLibrary vinylLibrary) throws IOException
   {
@@ -34,6 +37,15 @@ public class ServerConnection implements Runnable
     //Storing serverAddress
     InetAddress serverAddress = connectionSocket.getLocalAddress();
     serverIP = serverAddress.getHostAddress();
+
+
+    strategies= new HashMap<>();
+    strategies.put("Borrow", new BorrowStrategy());
+    strategies.put("Reserve", new ReserveStrategy());
+    strategies.put("Return", new ReturnStrategy());
+    strategies.put("Cancel", new CancelStrategy());
+    strategies.put("Remove", new RemoveStrategy());
+    strategies.put("Add", new AddStrategy());
   }
 
   @Override
@@ -41,7 +53,7 @@ public class ServerConnection implements Runnable
   {
 
     try {
-      sendPacket(new ServerPacket(vinylLibrary.getVinyls(), "nothing"));
+      sendPacket(new ServerPacket(vinylLibrary.getVinyls(), "onlyVinyls"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -53,13 +65,7 @@ public class ServerConnection implements Runnable
         Message message = (Message) inFromClient.readObject();
         logFromClient(message);
 
-
-
         actionIF(message);
-
-
-        connectionPool.broadcastPacket(new ServerPacket(vinylLibrary.getVinyls(), "nothing"));
-
 
       }
       catch (IOException | ClassNotFoundException e)
@@ -74,13 +80,18 @@ public class ServerConnection implements Runnable
     outToClient.reset();
     outToClient.writeObject(packet);
     logFromServer(packet);
-   }
+  }
    public void logFromServer(ServerPacket packet)
    {
-     String logString="Message ["+packet.getMessage()+"] has been sent";
-     if(packet.getMessage().equals("nothing"))
+     String logString;
+     if(packet.getMessage().equals("onlyVinyls"))
      {
        logString="Vinyl List has been sent";
+     }
+     else
+     {
+       logString="Vinyl List and Message ["+packet.getMessage()+"] have been sent";
+
      }
      log.add(logString,serverIP,clientIP);
    }
@@ -101,69 +112,16 @@ public class ServerConnection implements Runnable
   {
     ServerPacket packet = new ServerPacket(vinylLibrary.getVinyls(), message);
     connectionPool.broadcastPacket(packet);
-    logFromServer(packet);
   }
 
-  public void borrowVinyl(int clientID, int vinylID)
-  {
-    vinylLibrary.borrowVinyl(clientID, vinylID);
-  }
-  public void reserveVinyl(int clientID, int vinylID)
-  {
-    vinylLibrary.reserveVinyl(clientID, vinylID);
-  }
-  public void returnVinyl(int clientID, int vinylID)
-  {
-    vinylLibrary.returnVinyl(clientID, vinylID);
-  }
-  public void cancelReservation(int clientID, int vinylID)
-  {
-    vinylLibrary.cancelReservation(clientID, vinylID);
-  }
-  public void removeVinyl(int clientID, int vinylID)
-  {
-    vinylLibrary.removeVinyl(vinylID);
-  }
-  public void addVinyl(int clientID, String title, String artist, int releaseYear)
-  {
-    vinylLibrary.addVinyl(new Vinyl(title, artist, releaseYear));
-  }
-  public void actionIF(Message message)
-  {
-    //i should use strategy pattern here maybe
 
-
-    if(message.getAction().equals("Borrow"))
-    {
-      borrowVinyl(message.getClientID(), message.getVinylID());
+  public void actionIF(Message message) {
+    ActionStrategy strategy = strategies.get(message.getAction());
+    if (strategy != null) {
+      strategy.execute(message, vinylLibrary);
+    } else {
+      System.out.println("error");
     }
-    else if(message.getAction().equals("Reserve"))
-    {
-      reserveVinyl(message.getClientID(), message.getVinylID());
-    }
-    else if(message.getAction().equals("Return"))
-    {
-      returnVinyl(message.getClientID(), message.getVinylID());
-    }
-    else if(message.getAction().equals("Cancel"))
-    {
-      cancelReservation(message.getClientID(), message.getVinylID());
-    }
-    else if (message.getAction().equals("Remove"))
-    {
-      removeVinyl(message.getClientID(), message.getVinylID());
-    }
-    else if (message.getAction().equals("Add"))
-    {
-      addVinyl(message.getClientID(), message.getTitle(), message.getAuthor(),
-          message.getYearOfRelease());
-    }
-    else
-    {
-        System.out.println("error");
-    }
-
-
   }
 
 }
