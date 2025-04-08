@@ -9,9 +9,10 @@
 [done] You must use Java Sockets to connect the Client and Server
 [done] You must use the MVVM Design Pattern with at least two views, (maybe you already did this in Assignment 1. If not, you must do it now).
 [done] You must use the Observer Design Pattern .
-[] You must use the Singleton (and/or Multiton) Design Pattern as a log to the server console and to file(s).
+[done] You must use the Singleton (and/or Multiton) Design Pattern as a log to the server console and to file(s).
   It should always be possible to find all the communication for an entire day –text, IP address, date and time.
-[] You must use the Strategy Design Pattern
+[] !IMPORTANT! test this /\ with different devices
+[in progress] You must use the Strategy Design Pattern
 [] You must create a UML Class Diagram for the final solution (preferably in Astah).
 [] Documentation of your protocol (messages, syntax and actions).
 [] Annotated printout from Wireshark that show the following information:

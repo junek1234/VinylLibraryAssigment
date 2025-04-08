@@ -55,4 +55,5 @@ public class Message implements Serializable
   {
     return yearOfRelease;
   }
+
 }

@@ -15,7 +15,7 @@ public class Server
   private ConnectionPool connectionPool;
   public Server()
     {
-      System.out.println("Starting server...");
+//      System.out.println("Starting server...");
       VinylLibrary vinylLibrary = new VinylLibrary();
       Vinyl vinyl1 = new Vinyl("Midnight Echoes", "The Velvet Reverie", 1978);
       Vinyl vinyl2 = new Vinyl("Electric Sunburst", "Neon Horizon", 1985);
@@ -52,7 +52,7 @@ public class Server
           Socket socket = welcomeSocket.accept();
           serverConnection = new ServerConnection(socket, connectionPool, vinylLibrary);
           connectionPool.add(serverConnection);
-          System.out.println("Client connected");
+//          System.out.println("Client connected");
           new Thread(serverConnection).start();
         }
       }
