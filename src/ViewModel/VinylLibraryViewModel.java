@@ -74,11 +74,6 @@ public class VinylLibraryViewModel
     return messages;
   }
 
-  public void setMessages(String messages)
-  {
-    this.messages.set(messages);
-  }
-
   public ObservableList<Vinyl> getVinyls()
   {
     return vinyls;

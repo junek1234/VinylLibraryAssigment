@@ -1,16 +1,10 @@
 
-package Application;
-
-import Model.ClientModel;
-import Model.Message;
-import Model.ServerPacket;
-import Model.Vinyl;
+package Model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 
 public class ClientConnection implements Runnable
 {

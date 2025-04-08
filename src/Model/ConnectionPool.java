@@ -1,8 +1,5 @@
 
-package Application;
-
-import Model.ServerPacket;
-import Model.Vinyl;
+package Model;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,21 +28,6 @@ public class ConnectionPool
       }
     }
   }
-//  public void broadcastList(List<Vinyl> vinyls) throws IOException
-//  {
-//    for (ServerConnection connection : connections)
-//    {
-//      connection.updateList(vinyls);
-//
-//    }
-//  }
-//  public void broadcastMessage( String message) throws IOException
-//  {
-//    for (ServerConnection connection : connections)
-//    {
-//
-//      connection.sendMessage(message);
-//    }
-//  }
+
 
 }

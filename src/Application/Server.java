@@ -1,6 +1,7 @@
 package Application;
 
-import Model.ServerPacket;
+import Model.ConnectionPool;
+import Model.ServerConnection;
 import Model.Vinyl;
 import Model.VinylLibrary;
 
@@ -62,7 +63,7 @@ public class Server
       }
     }
 
-  private void onVinylToBeRemoved(PropertyChangeEvent propertyChangeEvent)
+  private synchronized void onVinylToBeRemoved(PropertyChangeEvent propertyChangeEvent)
   {
     try
     {
@@ -74,7 +75,7 @@ public class Server
     }
   }
 
-  private void onVinylAdd(PropertyChangeEvent propertyChangeEvent)
+  private synchronized void onVinylAdd(PropertyChangeEvent propertyChangeEvent)
   {
     try
     {
@@ -86,7 +87,7 @@ public class Server
     }
   }
 
-  private void onVinylStatusChanged(PropertyChangeEvent propertyChangeEvent)
+  private synchronized void onVinylStatusChanged(PropertyChangeEvent propertyChangeEvent)
   {
     try
     {
@@ -98,7 +99,7 @@ public class Server
     }
   }
 
-  private void onVinylRemoved(PropertyChangeEvent propertyChangeEvent)
+  private synchronized void onVinylRemoved(PropertyChangeEvent propertyChangeEvent)
 
   {
     try

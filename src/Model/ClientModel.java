@@ -1,7 +1,5 @@
 package Model;
 
-import Application.ClientConnection;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
@@ -151,8 +149,5 @@ public class ClientModel implements PropertyChangeSubject
     return message;
   }
 
-  public void newMessage(String message)
-  {
-    this.message = message;
-  }
+
 }

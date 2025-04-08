@@ -14,20 +14,6 @@ public class LogLine {
     this.ipAdressTo=ipAdressTo;
   }
 
-  public String getLogString() {
-    return logString;
-  }
-
-  public String getTimestamp() {
-    return timestamp;
-  }
-  public String getIpAdressFrom() {
-    return ipAdressFrom;
-  }
-  public String getIpAdressTo() {
-    return ipAdressTo;
-  }
-
 
   @Override
   public String toString() {
