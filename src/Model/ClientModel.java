@@ -16,7 +16,7 @@ public class ClientModel implements PropertyChangeSubject
 
   public ClientModel() throws IOException
   {
-    Socket socket = new Socket("localhost", 2910);
+    Socket socket = new Socket("192.168.1.34", 2910);
     clientConnection = new ClientConnection(socket, this);
     new Thread(clientConnection).start();
 

@@ -107,3 +107,16 @@
 [2025-47-08  08:47:43] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Electric Sunburst has been reserved] have been sent
 [2025-47-08  08:47:57] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested adding Vinyl [234, 234, 234]
 [2025-47-08  08:47:57] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [234 has been added] have been sent
+[2025-36-09  03:36:57] From:127.0.0.1 To:127.0.0.1 Vinyl List has been sent
+[2025-37-09  03:37:10] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested to borrow Vinyl ID-0
+[2025-37-09  03:37:10] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Midnight Echoes has been borrowed] have been sent
+[2025-37-09  03:37:22] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested to remove Vinyl ID-0
+[2025-37-09  03:37:22] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Midnight Echoes is marked to be removed] have been sent
+[2025-37-09  03:37:45] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested adding Vinyl [123, 123, 123]
+[2025-37-09  03:37:45] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [123 has been added] have been sent
+[2025-38-09  03:38:06] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested to borrow Vinyl ID-1
+[2025-38-09  03:38:06] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Electric Sunburst has been borrowed] have been sent
+[2025-38-09  03:38:08] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested to borrow Vinyl ID-1
+[2025-38-09  03:38:34] From:127.0.0.1 To:127.0.0.1 Client ID-2 requested to return Vinyl ID-0
+[2025-38-09  03:38:34] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Midnight Echoes has been returned] have been sent
+[2025-38-09  03:38:34] From:127.0.0.1 To:127.0.0.1 Vinyl List and Message [Midnight Echoes has been removed] have been sent

@@ -18,3 +18,4 @@
    The segments exchanged in the 3-way handshake. How are they identified?
    IP addresses and port numbers associated with the TCP socket established between your client and server. The client and server must run on different hosts (NOT localhost).
    Application layer “borrow” request message from client and response message from server.
+[not done] Implement Proxy - it does not make sense to implement in because client just sends requests to the server and should not have any access to the ServerModel(VinylLibrary) even through a proxy.
