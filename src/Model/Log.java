@@ -14,7 +14,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Log
 {
-  private Queue<LogLine> logQueue;
   private File logFile;
   private DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd  hh:mm:ss");
   private static Log instance;
@@ -39,7 +38,6 @@ public class Log
   }
 
   private void initialize() {
-    logQueue = new LinkedList<>();
     logFile = new File("logs.txt");
     try {
       Thread.sleep(1500);
@@ -50,23 +48,15 @@ public class Log
 
   public synchronized void add(String log, String ipAddressFrom, String ipAddressTo)
   {
-    if (log == null || log.equals("")) //Don't log empty lines
+    if (log == null || log.equals(""))
     {
       return;
     }
-    // add to the queue
     LogLine logLine = new LogLine(log, dateFormat.format(Calendar.getInstance().getTime()), ipAddressFrom, ipAddressTo);
-    logQueue.add(logLine);
-    addToFile(logLine.toString());          // add to the file
-    System.out.println(logLine); // add to the console
+    addToFile(logLine.toString());// add to the file
+    System.out.println(logLine);// add to the console
   }
 
-  public Queue<LogLine> getAll()
-  {
-    return logQueue;
-  }
-
-  //Method to write logEntries to a file
   private void addToFile(String log)
   {
     if (log == null)
